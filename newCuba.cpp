@@ -90,7 +90,7 @@ void fuzzification(Bebida *c){ // Realiza o processo de fuzzificação
           c->refriFraco = 0;	//Se for menor que 66 ou maior que 70 então grau de pertinencia a fraco é igual a 0
 	  }
       if( c->qtdeRefri >= 66 && c->qtdeRefri < 68 ){
-          c->refriFraco = (c->qtdeRefri - 66) / (68 - 66); //Se for maior ou igual 66 e menor que 68, então Linear Decrescente, (x-x1)/(x2-x1)
+          c->refriFraco = (c->qtdeRefri - 66) / (68 - 66); //Se for maior ou igual 66 e menor que 68, então Linear crescente, (x-x1)/(x2-x1)
 	  }
       if( c->qtdeRefri >= 68 && c->qtdeRefri <= 70 ){
           c->refriFraco = 1;		// se for maior ou igual que 68 e menor ou igual 70 então grau de pertinencia fraco igual a 1
@@ -100,35 +100,35 @@ void fuzzification(Bebida *c){ // Realiza o processo de fuzzificação
    /************ Run **********/
    /************** Run Fraco ***************/
    if( c->qtdeRun < 10 || c->qtdeRun > 20 ) {
-       c->runFraco = 0;
+       c->runFraco = 0; 	// Se for menor do que 10 ou maior do que 20 então pgrau de pertinencia igual a 0
    }
    if( c->qtdeRun >= 10 && c->qtdeRun < 15 ) {
-       c->runFraco = 1;
+       c->runFraco = 1;		// Se for maior ou igual a 10 e menor do que 15 então, grau de pertinencia igual a 1
    }
    if( c->qtdeRun >= 15 && c->qtdeRun <= 20 ) {
-       c->runFraco = ( 20 - c->qtdeRun ) / (20 - 15);
+       c->runFraco = ( 20 - c->qtdeRun ) / (20 - 15);		// Se for maior ou iugal a 15 e menor ou igual a 20 então linear decrescente, logo (x2-x)/(x2-x1)
    }
    
    /************** Run Suave ***************/
    if( c->qtdeRun < 15 || c->qtdeRun > 27 ) {
-       c->runSuave = 0;
+       c->runSuave = 0;		// Se  for menor doque 15 ou maior do que 27 então grau de pertinencia é igual a 0
    }
    if( c->qtdeRun >=15 && c->qtdeRun < 20 ) {  
-       c->runSuave = ( c->qtdeRun - 15 ) / (20 - 15);
+       c->runSuave = ( c->qtdeRun - 15 ) / (20 - 15); 		// se for maior ou igual a 15 então linear crescente, logo (x-x1)/(x2-x1)
    }
    if( c->qtdeRun >=20 && c->qtdeRun < 25 ) {
-       c->runSuave = 1;
+       c->runSuave = 1; 		// Se for maior ou igual a 20 e menor do que 25 então grau de pertinencia é igual a 1
    }
    if( c->qtdeRun >= 25 && c->qtdeRun <= 27 ) {
-       c->runSuave = ( 27 - c->qtdeRun ) / (27 - 25);
+       c->runSuave = ( 27 - c->qtdeRun ) / (27 - 25); 		// se for maior ou igual a 25 e menor ou igual a 27 então linear decrescente, logo (x2-x)/(x2-x1)
    }
 
     /************** Run Forte ***************/
    if( c->qtdeRun < 23 || c->qtdeRun > 30) {
-       c->runForte = 0;
+       c->runForte = 0; // Se for menor do queu 23 ou maior do que 30 então grau de pertinencia igual a 0
    }
    if( c->qtdeRun >= 23 && c->qtdeRun < 28 ) {
-       c->runForte = ( c->qtdeRun - 23 ) / (28 - 23);
+       c->runForte = ( c->qtdeRun - 23 ) / (28 - 23); // Se for 
    }
    if( c->qtdeRun >= 28 && c->qtdeRun <= 30) {
        c->runForte = 1;

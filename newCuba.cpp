@@ -39,7 +39,7 @@ void fuzzification(Bebida *c){ // Realiza o processo de fuzzificação
           c->refriSuave = ( c->qtdeRefri - 52 ) / (54 - 52); 		// Linear Crescente, se for maior ou igual a 52 ou menor igual a 54 então (x-x1)/(x2-x1)
 	  }      
    	  if( c->qtdeRefri >= 54 && c->qtdeRefri <= 56 ){
-            c->refriSuave = 1;		// se for maior ou igual 52 ou menor igual 56 então pertinencia 1 para suave
+            c->refriSuave = 1;		// se for maior ou igual 54 e menor igual 56 então pertinencia 1 para suave
 	  }
       if( c->qtdeRefri > 56 && c->qtdeRefri <= 58 ) {
             c->refriSuave = ( 58 - c->qtdeRefri ) / (58 - 56);	// Linear Decrescente, se x for maior ou igual a 56 e menor ou igual a 58 então (x2-x)/(x2-x1)
@@ -62,38 +62,38 @@ void fuzzification(Bebida *c){ // Realiza o processo de fuzzificação
    if(c->refri == 'p' || c->refri == 'P'){
       /************** Pepsi Forte ***************/
       if( c->qtdeRefri < 60 || c->qtdeRefri > 64 ){
-         c->refriForte = 0;
+         c->refriForte = 0; 	// se for menor que 60 ou maior que 64 grau de pertinencia forte é igual a 0
 	  }
       if( c->qtdeRefri >= 60 && c->qtdeRefri < 62 ){
-          c->refriForte = 1;
+          c->refriForte = 1; 	// se for maior ou igual a 60 e menor ou igual 62 então grau de pertinencia forte é igual a 1
 	  }
       if( c->qtdeRefri >= 62 && c->qtdeRefri <= 64 ){
-          c->refriForte = ( 64 - c->qtdeRefri ) / (64 - 62);
+          c->refriForte = ( 64 - c->qtdeRefri ) / (64 - 62); 	// Linear Descrescente, se for maior ou igual 62 e menor ou igual 64 então (x2-x)/(x2-x1)
 	  }
       
       /************** Pepsi Suave ***************/
       if( c->qtdeRefri < 62 || c->qtdeRefri > 68 ){
-          c->refriSuave = 0;
+          c->refriSuave = 0;	// Se fir nebir qye 62 iy nauir qye 68 então grau de pertinencia suave é igual a 0
 	  }
       if( c->qtdeRefri >= 62 && c->qtdeRefri < 64 ){
-          c->refriSuave = ( c->qtdeRefri - 62) / (64 - 62);
+          c->refriSuave = ( c->qtdeRefri - 62) / (64 - 62); // Se for maior ou igual 62 e menor que 64 Linear crescente, então, (x-x1)/(x2-x1)
 	  }
       if( c->qtdeRefri >= 64 && c->qtdeRefri < 66 ){
-          c->refriSuave = 1;
+          c->refriSuave = 1; 	// Se for maior ou igual 64  e menor ou igual 66 então grau de pertinencia a suave é igual a 1
 	  }
       if( c->qtdeRefri >= 66 && c->qtdeRefri <= 68 ){
-          c->refriSuave = ( 68 - c->qtdeRefri ) / (68 - 66);
+          c->refriSuave = ( 68 - c->qtdeRefri ) / (68 - 66); 	// Linear Descrescente, se for maior ou igual 66 e menor ou igual 68 então, (x2-x)/(x2-x1)
 	  }
         
       /************** Pepsi Fraca ***************/
       if( c->qtdeRefri < 66 || c->qtdeRefri > 70 ){
-          c->refriFraco = 0;
+          c->refriFraco = 0;	//Se for menor que 66 ou maior que 70 então grau de pertinencia a fraco é igual a 0
 	  }
       if( c->qtdeRefri >= 66 && c->qtdeRefri < 68 ){
-          c->refriFraco = (c->qtdeRefri - 66) / (68 - 66);
+          c->refriFraco = (c->qtdeRefri - 66) / (68 - 66); //Se for maior ou igual 66 e menor que 68, então Linear Decrescente, (x-x1)/(x2-x1)
 	  }
       if( c->qtdeRefri >= 68 && c->qtdeRefri <= 70 ){
-          c->refriFraco = 1;
+          c->refriFraco = 1;		// se for maior ou igual que 68 e menor ou igual 70 então grau de pertinencia fraco igual a 1
 	  }
    }
    
@@ -134,11 +134,11 @@ void fuzzification(Bebida *c){ // Realiza o processo de fuzzificação
        c->runForte = 1;
    }
 
-   //Verifica se tem Gelo
+   /************** Gelo ***************/
    if( c->qtdeGelo < 20 || c->qtdeGelo > 20 )
-      c->gpGelo = 0;
+      c->gpGelo = 0;	//não possui gelo
    else
-      c->gpGelo = 1;
+      c->gpGelo = 1;	// possui gelo
 }
 
 

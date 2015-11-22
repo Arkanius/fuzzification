@@ -11,10 +11,10 @@ typedef struct cuba{
    float gpCuba;
    float preco;
    int paladar[3];
-}Bebida;
+}Cuba;
 
 
-void fuzzificaQtdes(Bebida *c){ //processamentos para o Exercício 1
+void fuzzificaQtdes(Cuba *c){ //processamentos para o Exercício 1
    
    if( c->refri == 'C' || c->refri == 'c' ){
       //CocaForte(X)

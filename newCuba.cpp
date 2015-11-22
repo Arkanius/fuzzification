@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <locale.h>
+#include <ctype.h>
+
 
 typedef struct cuba{
    char refri;
@@ -17,17 +20,21 @@ typedef struct cuba{
 void fuzzification(Bebida *c){ // Realiza o processo de fuzzificação
    
    if( c->refri == 'C' || c->refri == 'c' ){
-      //CocaForte(X)
-      if( c->qtdeRefri < 50 || c->qtdeRefri > 54 )
+      // Verifica se é CocaForte
+      if( c->qtdeRefri < 50 || c->qtdeRefri > 54 ){
          c->refriForte = 0;
-      else
-         if( c->qtdeRefri >= 50 && c->qtdeRefri < 52 )
+	  }
+      else {
+         if( c->qtdeRefri >= 50 && c->qtdeRefri < 52 ) {
             c->refriForte = 1;
+		 }
          else
-            if( c->qtdeRefri >= 52 && c->qtdeRefri <= 54 )
+            if( c->qtdeRefri >= 52 && c->qtdeRefri <= 54 ) {
                c->refriForte = (54 - c->qtdeRefri) / (54 - 52);
+			}
+	  }
                         
-      //CocaSuave(X)
+      //Verifica se é CocaSuave
       if( c->qtdeRefri < 52 || c->qtdeRefri > 58 )
          c->refriSuave = 0;
       else
@@ -40,7 +47,7 @@ void fuzzification(Bebida *c){ // Realiza o processo de fuzzificação
                if( c->qtdeRefri > 56 && c->qtdeRefri <= 58 )
                   c->refriSuave = ( 58 - c->qtdeRefri ) / (58 - 56);
       
-      //CocaFraca(X)
+      //Verifica se é  CocaFraca
       if( c->qtdeRefri < 56 || c->qtdeRefri > 60 )
          c->refriFraco = 0;
       else
@@ -53,7 +60,7 @@ void fuzzification(Bebida *c){ // Realiza o processo de fuzzificação
    }
     
    if(c->refri == 'p' || c->refri == 'P'){
-      //PepsiForte(X)
+      //Verifica se é PepsiForte
       if( c->qtdeRefri < 60 || c->qtdeRefri > 64 )
          c->refriForte = 0;
       else
@@ -63,7 +70,7 @@ void fuzzification(Bebida *c){ // Realiza o processo de fuzzificação
             if( c->qtdeRefri >= 62 && c->qtdeRefri <= 64 )
                c->refriForte = ( 64 - c->qtdeRefri ) / (64 - 62);
       
-      //PepsiSuave(X)
+      //Verifica se é PepsiSuave
       if( c->qtdeRefri < 62 || c->qtdeRefri > 68 )
          c->refriSuave = 0;
       else
@@ -76,7 +83,7 @@ void fuzzification(Bebida *c){ // Realiza o processo de fuzzificação
                if( c->qtdeRefri >= 66 && c->qtdeRefri <= 68 )
                   c->refriSuave = ( 68 - c->qtdeRefri ) / (68 - 66);
         
-      //PepsiFraca(X)
+      //Verifica se é PepsiFraca
       if( c->qtdeRefri < 66 || c->qtdeRefri > 70 )
          c->refriFraco = 0;
       else
@@ -87,7 +94,7 @@ void fuzzification(Bebida *c){ // Realiza o processo de fuzzificação
                c->refriFraco = 1;
    }
    
-   //RunFraco(X)
+   //Verifica se é RunFraco
    if( c->qtdeRun < 10 || c->qtdeRun > 20 )
       c->runFraco = 0;
    else
@@ -97,7 +104,7 @@ void fuzzification(Bebida *c){ // Realiza o processo de fuzzificação
          if( c->qtdeRun >= 15 && c->qtdeRun <= 20 )
             c->runFraco = ( 20 - c->qtdeRun ) / (20 - 15);
    
-   //RunSuave(X)
+   //Verifica se é RunSuave
    if( c->qtdeRun < 15 || c->qtdeRun > 27 )
       c->runSuave = 0;
    else
@@ -110,7 +117,7 @@ void fuzzification(Bebida *c){ // Realiza o processo de fuzzificação
             if( c->qtdeRun >= 25 && c->qtdeRun <= 27 )
                c->runSuave = ( 27 - c->qtdeRun ) / (27 - 25);
 
-    //RunForte(X)
+    //Verifica se é RunForte
    if( c->qtdeRun < 23 || c->qtdeRun > 30)
       c->runForte = 0;
    else
@@ -120,7 +127,7 @@ void fuzzification(Bebida *c){ // Realiza o processo de fuzzificação
          if( c->qtdeRun >= 28 && c->qtdeRun <= 30)
             c->runForte = 1;
 
-   //Gelo(X)
+   //Verifica se tem Gelo
    if( c->qtdeGelo < 20 || c->qtdeGelo > 20 )
       c->gpGelo = 0;
    else
@@ -319,35 +326,35 @@ void exibeDrink(Bebida *c){
 
 
 Bebida* entradasDrink(Bebida *c){
-   char refri;
    float qtdeRefri=0;
    float qtdeRun=0;
    float qtdeGelo=0;
+   char refri;
    char continuar;
     
    fflush(stdin);
     
    do{
-      printf("Entre com o refrigerante (C = Coca, P = Pepsi): ");
+      printf("Digite o refrigerante (C = Coca, P = Pepsi): ");
       scanf(" %c", &refri);
    }while(refri != 'C' && refri != 'c' && refri != 'P' && refri != 'p');
     
    fflush(stdin);
     
    if(refri == 'c' || refri == 'C'){
-      printf("\nEntre com a quantidade de Coca (de 50ml a 60ml): ");
+      printf("\nDigite a quantidade de Coca (de 50ml a 60ml): ");
       scanf("%f", &qtdeRefri);
    }
     
    if( refri == 'p' || refri == 'P'){
-      printf("\nEntre com a quantidade de Pepsi (de 60ml a 70ml): ");
+      printf("\nDigite a quantidade de Pepsi (de 60ml a 70ml): ");
       scanf("%f", &qtdeRefri);
    }
     
-   printf("\nEntre com a quantidade de Run (de 10ml a 30ml): ");
+   printf("\nDigite a quantidade de Run (de 10ml a 30ml): ");
    scanf("%f", &qtdeRun);
     
-   printf("\nEntre com a quantidade de Gelo (20ml): ");
+   printf("\nDigite a quantidade de Gelo (20ml): ");
    scanf("%f", &qtdeGelo);
    
    c = insereDrink(c, refri, qtdeRefri, qtdeRun, qtdeGelo);
@@ -356,17 +363,16 @@ Bebida* entradasDrink(Bebida *c){
 
 
 int main(){
+	setlocale(LC_ALL, "Portuguese");
     int opcao=0;
     Bebida* cuba = NULL;
-    char cedilha=135;
-    char atil=198;
     
     do{
        system("cls");
        printf(" 1 - Preparar drink\n");
        printf(" 2 - Exibir drink\n");
        printf(" 3 - Sair\n");
-       printf("\nOp%c%co: ", cedilha, atil);
+       printf("\nOpção\n");
        scanf("%d", &opcao);
        printf("\n\n");
         

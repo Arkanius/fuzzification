@@ -17,6 +17,19 @@ typedef struct cuba{
 }Bebida;
 
 
+
+
+float calcularLineares(float x1, float x2, float x, int type) {
+	if(type == 1){
+		// Linear Crescente
+		return (x-x1)/(x2-x1);
+		
+	}else {
+		// Linear Decescente
+		return (x2-x)/(x2-x1);
+	}
+}
+
 void fuzzification(Bebida *c){ // Realiza o processo de fuzzificação
    
    if( c->refri == 'C' || c->refri == 'c' ){
@@ -28,7 +41,7 @@ void fuzzification(Bebida *c){ // Realiza o processo de fuzzificação
             c->refriForte = 1;		// Segundo o gráfico, se estiver entre 50 e 52 o grau de pertinencia a forte é igual a 1
 	    }
         if( c->qtdeRefri >= 52 && c->qtdeRefri <= 54 ) {
-            c->refriForte = (54 - c->qtdeRefri) / (54 - 52); 	// Linear Decrescente, se x for maior ou igual a 52 e menor ou igual a 54 então (x2-x)/(x2-x1)
+            c->refriForte = calcularLineares(52, 54, c->qtdeRefri, 2); 	// Linear Decrescente, se x for maior ou igual a 52 e menor ou igual a 54 então (x2-x)/(x2-x1)
 	    }
 	                           
       /************ Coca Suave *****************/
@@ -42,7 +55,7 @@ void fuzzification(Bebida *c){ // Realiza o processo de fuzzificação
             c->refriSuave = 1;		// se for maior ou igual 54 e menor igual 56 então pertinencia 1 para suave
 	  }
       if( c->qtdeRefri > 56 && c->qtdeRefri <= 58 ) {
-            c->refriSuave = ( 58 - c->qtdeRefri ) / (58 - 56);	// Linear Decrescente, se x for maior ou igual a 56 e menor ou igual a 58 então (x2-x)/(x2-x1)
+            c->refriSuave = calcularLineares(56, 58, c->qtdeRefri, 2); // Linear Decrescente, se x for maior ou igual a 56 e menor ou igual a 58 então (x2-x)/(x2-x1)
 	  }	   
       
      /************ Coca Fraca *****************/
@@ -50,7 +63,8 @@ void fuzzification(Bebida *c){ // Realiza o processo de fuzzificação
          c->refriFraco = 0;		// Se for menor uqe 56  ou maior que 60 pertinencia 0 para fraco
 	  }
       if( c->qtdeRefri >= 56 && c->qtdeRefri < 58 ){
-          c->refriFraco = ( c->qtdeRefri - 56 ) / (58 - 56);	// Linear Crescente, se x for maior ou igual 56 e menor ou igual 58 então (x-x1/(x2-x1)
+          c->refriFraco = calcularLineares(56, 58, c->qtdeRefri, 1);
+		  //c->refriFraco = ( c->qtdeRefri - 56 ) / (58 - 56);	// Linear Crescente, se x for maior ou igual 56 e menor ou igual 58 então (x-x1/(x2-x1)
 	   }
       if( c->qtdeRefri >= 58 && c->qtdeRefri <= 60 ){
           c->refriFraco = 1; 		// Se for maior ou igual 58 e menor ou igual 60 então pertinencia 1 para fraco
@@ -125,13 +139,13 @@ void fuzzification(Bebida *c){ // Realiza o processo de fuzzificação
 
     /************** Run Forte ***************/
    if( c->qtdeRun < 23 || c->qtdeRun > 30) {
-       c->runForte = 0; // Se for menor do queu 23 ou maior do que 30 então grau de pertinencia igual a 0
+       c->runForte = 0; 		// Se for menor do queu 23 ou maior do que 30 então grau de pertinencia igual a 0
    }
    if( c->qtdeRun >= 23 && c->qtdeRun < 28 ) {
-       c->runForte = ( c->qtdeRun - 23 ) / (28 - 23); // Se for 
+       c->runForte = ( c->qtdeRun - 23 ) / (28 - 23); 		// Se for maior ou igual 23 e menor do que 28 então linear crescente, logo (x-x1)/(x2-x1)
    }
    if( c->qtdeRun >= 28 && c->qtdeRun <= 30) {
-       c->runForte = 1;
+       c->runForte = 1;		//Se for maior ou igual a 28 e menor ou igual a 30 então grau de pertinencia 1
    }
 
    /************** Gelo ***************/

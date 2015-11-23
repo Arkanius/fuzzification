@@ -164,36 +164,43 @@ float calcularMinimo(float refri, float run, float gelo){
     float aux = x[0];
     
     while(i<=1){
-       if(aux > x[i+1]){	
+       if(aux > x[i+1]){  
          aux = x[i+1];
-       }	
-		i++;
-	}    
+       }  
+    i++;
+  }    
    return aux;
 }
 
 
-float Maximo(float *x){
-   int i=0;
-   float maximo=0;
+float calcularMaximo(float combinacaoValor1, float combinacaoValor2, float combinacaoValor3){
+  float x[3];
+  x[0] = combinacaoValor1;
+  x[1] = combinacaoValor2;
+  x[2] = combinacaoValor3;
+  
+   int i = 0;
+   float aux = x[0];
     
-   for(i=0, maximo = x[0]; i<=1; i++){
-      if(maximo < x[i+1])
-         maximo = x[i+1];
-   }
-   return maximo;
+    while(i<=1){
+       if(aux < x[i+1]){  
+         aux = x[i+1];
+       }  
+    i++;
+  }    
+   return aux;
 }
 
 
 float suaveMax(Bebida *c){ // processamento do EXERCÍCIO 2a
    float suaveMax=0;
-   float suaveMin[3];
+   float combinacaoMin1, combinacaoMin2, combinacaoMin3; // Representa as 3 combinações posiveis dadas no exercicio 2A
     
-   suaveMin[0] = calcularMinimo(c->refriForte, c->runFraco, c->gpGelo);
-   suaveMin[1] = calcularMinimo(c->refriSuave, c->runSuave, c->gpGelo);
-   suaveMin[2] = calcularMinimo(c->refriFraco, c->runForte, c->gpGelo);
+   combinacaoMin1 = calcularMinimo(c->refriForte, c->runFraco, c->gpGelo);
+   combinacaoMin2 = calcularMinimo(c->refriSuave, c->runSuave, c->gpGelo);
+   combinacaoMin3 = calcularMinimo(c->refriFraco, c->runForte, c->gpGelo);
     
-   suaveMax = Maximo(suaveMin);
+   suaveMax = calcularMaximo(combinacaoMin1, combinacaoMin2, combinacaoMin3); // calcula o maximo dos minimos
    c->suaveMax = suaveMax;
    return suaveMax;
 }
@@ -201,13 +208,13 @@ float suaveMax(Bebida *c){ // processamento do EXERCÍCIO 2a
 
 float forteMax(Bebida *c){ // processamento do EXERCÍCIO 2b
    float forteMax=0;
-   float forteMin[3];
+   float combinacaoMin1, combinacaoMin2, combinacaoMin3; // Representa as 3 combinações posiveis dadas no exercicio 2B
      
-   forteMin[0] = calcularMinimo(c->refriForte, c->runSuave, c->gpGelo);
-   forteMin[1] = calcularMinimo(c->refriForte, c->runForte, c->gpGelo);
-   forteMin[2] = calcularMinimo(c->refriSuave, c->runForte, c->gpGelo);
+   combinacaoMin1 = calcularMinimo(c->refriForte, c->runSuave, c->gpGelo);
+   combinacaoMin2 = calcularMinimo(c->refriForte, c->runForte, c->gpGelo);
+   combinacaoMin3 = calcularMinimo(c->refriSuave, c->runForte, c->gpGelo);
     
-   forteMax = Maximo(forteMin);
+   forteMax = calcularMaximo(combinacaoMin1, combinacaoMin2, combinacaoMin3); // calcula o maximo dos minimos
    c->forteMax = forteMax;
    return forteMax;
 }
@@ -215,19 +222,19 @@ float forteMax(Bebida *c){ // processamento do EXERCÍCIO 2b
 
 float fracoMax(Bebida *c){  // processamento do EXERCÍCIO 2c
    float fracoMax=0;
-   float fracoMin[3];
+   float combinacaoMin1, combinacaoMin2, combinacaoMin3;  // Representa as 3 combinações posiveis dadas no exercicio 2B
     
-   fracoMin[0] = calcularMinimo(c->refriFraco, c->runFraco, c->gpGelo);
-   fracoMin[1] = calcularMinimo(c->refriFraco, c->runSuave, c->gpGelo);
-   fracoMin[2] = calcularMinimo(c->refriSuave, c->runFraco, c->gpGelo);
+   combinacaoMin1 = calcularMinimo(c->refriFraco, c->runFraco, c->gpGelo);
+   combinacaoMin2 = calcularMinimo(c->refriFraco, c->runSuave, c->gpGelo);
+   combinacaoMin3 = calcularMinimo(c->refriSuave, c->runFraco, c->gpGelo);
     
-   fracoMax = Maximo(fracoMin);
+   fracoMax = calcularMaximo(combinacaoMin1, combinacaoMin2, combinacaoMin3); // calcula o maximo dos minimos
    c->fracoMax = fracoMax;
    return fracoMax;
 }
 
 
-void validaPaladar(Bebida *c, float *ex2, float ex3){
+void getPaladar(Bebida *c, float *ex2, float ex3){
     
    if(ex3 > 0 && c->gpGelo == 1){
       if(ex3 == ex2[0] && ex3 == ex2[1] && ex3 == ex2[2]){
@@ -271,19 +278,24 @@ void validaPaladar(Bebida *c, float *ex2, float ex3){
 }
 
 
-Bebida *exercicios2e3(Bebida* c){ // chama processamentos para os Exercícios 2 e 3
-   float maxEx2[3];
-   float maxEx3 = 0;
+Bebida *processaPaladar(Bebida* c){ // Exercicio 3
+   float maximoForte, maximoFraco, maximoSuave;
+   float exer2[3];
+   float paladar = 0;
    int i=0;
     
-   maxEx2[0] = forteMax(c); //EXERCÍCIO 2b
-   maxEx2[1] = suaveMax(c); //EXERCÍCIO 2a
-   maxEx2[2] = fracoMax(c); //EXERCÍCIO 2c
+   maximoForte = forteMax(c); //EXERCÍCIO 2b
+   maximoSuave = suaveMax(c); //EXERCÍCIO 2a
+   maximoFraco = fracoMax(c); //EXERCÍCIO 2c
+   
+   exer2[0] = maximoForte;
+   exer2[1] = maximoSuave;
+   exer2[2] = maximoFraco;
     
-   maxEx3 = Maximo(maxEx2);
-   c->gpCuba = maxEx3; //EXERCÍCIO 3
+   paladar = calcularMaximo(maximoForte, maximoSuave, maximoFraco);
+   c->gpCuba = paladar; //EXERCÍCIO 3
     
-   validaPaladar(c, maxEx2, maxEx3);
+   getPaladar(c, exer2, paladar);
     
    return c;
 }
@@ -299,7 +311,7 @@ Bebida* insereDrink(Bebida *c, char refri, float qtdeRefri, float qtdeRun, float
    c->qtdeGelo = qtdeGelo;
             
    fuzzification(c);
-   exercicios2e3(c);
+   processaPaladar(c);
    return c;
 }
 

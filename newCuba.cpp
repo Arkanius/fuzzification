@@ -234,45 +234,52 @@ float fracoMax(Bebida *c){  // processamento do EXERCÍCIO 2c
 }
 
 
-void getPaladar(Bebida *c, float *ex2, float ex3){
+void getPaladar(Bebida *c, float *ex2, float maiorPaladar){
     
-   if(ex3 > 0 && c->gpGelo == 1){
-      if(ex3 == ex2[0] && ex3 == ex2[1] && ex3 == ex2[2]){
+   if(maiorPaladar > 0 && c->gpGelo == 1){
+      if(maiorPaladar == ex2[0] && maiorPaladar == ex2[1] && maiorPaladar == ex2[2]){
          c->paladar[0]=1; //forte
          c->paladar[1]=1; //suave
          c->paladar[2]=1; //fraco
          c->preco = 25.00;
-      } else
-           if(ex3 == ex2[0] && ex3 == ex2[1]){
-              c->paladar[0]=1; //forte
-              c->paladar[1]=1; //suave
-              c->preco = 25.00;
-                
-           } else
-                if(ex3 == ex2[0] && ex3 == ex2[2]){
-                   c->paladar[0]=1; //forte
-                   c->paladar[2]=1; //fraco
-                   c->preco = 25.00;
-                } else 
-                     if(ex3 == ex2[1] && ex3 == ex2[2]){
-                        c->paladar[1]=1; //suave
-                        c->paladar[2]=1; //fraco
-                        c->preco = 20.00;
-                     } else
-                          if(ex3 == ex2[0]){
-                             c->paladar[0]=1; //forte
-                             c->preco = 25.00;
-                          } else
-                               if(ex3 == ex2[1]){
-                                  c->paladar[1]=1; //suave
-                                  c->preco = 20.00;
-                               } else
-                                    if(ex3 == ex2[2]){
-                                       c->paladar[2]=1; //fraco
-                                       c->preco = 15.00;
-                                    } else
-                                         c->preco = 0.00; //não é cuba
-      return;
+         return;
+       } 
+        if(maiorPaladar == ex2[0] && maiorPaladar == ex2[1]){
+            c->paladar[0]=1; //forte
+            c->paladar[1]=1; //suave
+            c->preco = 25.00;            
+            return;
+        }
+	    if(maiorPaladar == ex2[0] && maiorPaladar == ex2[2]){
+	        c->paladar[0]=1; //forte0
+	        c->paladar[2]=1; //fraco
+	        c->preco = 25.00;
+	        return;
+	    }  
+        if(maiorPaladar == ex2[1] && maiorPaladar == ex2[2]){
+            c->paladar[1]=1; //suave
+            c->paladar[2]=1; //fraco
+            c->preco = 20.00;
+            return;
+        }
+        if(maiorPaladar == ex2[0]){
+            c->paladar[0]=1; //forte
+            c->preco = 25.00;
+            return;
+        } 
+       if(maiorPaladar == ex2[1]){
+            c->paladar[1]=1; //suave
+            c->preco = 20.00;
+            return;
+       } 
+       if(maiorPaladar == ex2[2]){
+           c->paladar[2]=1; //fraco
+           c->preco = 15.00;
+           return;
+       }
+       
+       c->preco = 0.00; //não é cuba
+       return;
    }
    c->preco = 0.00;
 }

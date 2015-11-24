@@ -250,12 +250,12 @@ void getPaladar(Bebida *c, float *ex2, float maiorPaladar){
             c->preco = 25.00;            
             return;
         }
-	    if(maiorPaladar == ex2[0] && maiorPaladar == ex2[2]){
-	        c->paladar[0]=1; //forte0
-	        c->paladar[2]=1; //fraco
-	        c->preco = 25.00;
-	        return;
-	    }  
+      if(maiorPaladar == ex2[0] && maiorPaladar == ex2[2]){
+          c->paladar[0]=1; //forte0
+          c->paladar[2]=1; //fraco
+          c->preco = 25.00;
+          return;
+      }  
         if(maiorPaladar == ex2[1] && maiorPaladar == ex2[2]){
             c->paladar[1]=1; //suave
             c->paladar[2]=1; //fraco
@@ -308,18 +308,18 @@ Bebida *processaPaladar(Bebida* c){ // Exercicio 3
 }
 
 
-Bebida* insereDrink(Bebida *c, char refri, float qtdeRefri, float qtdeRun, float qtdeGelo){
-   free(c);
-   c = (Bebida*)malloc(sizeof(Bebida));
+Bebida* getDrink(Bebida *cubaLivre, char tipoRefri, float refri, float run, float gelo){
+   free(cubaLivre);
+   cubaLivre = (Bebida*)malloc(sizeof(Bebida));
 
-   c -> refri = refri;
-   c->qtdeRefri = qtdeRefri;
-   c->qtdeRun = qtdeRun;
-   c->qtdeGelo = qtdeGelo;
+   cubaLivre->refri = tipoRefri;
+   cubaLivre->qtdeRefri = refri;
+   cubaLivre->qtdeRun = run;
+   cubaLivre->qtdeGelo = gelo;
             
-   fuzzification(c);
-   processaPaladar(c);
-   return c;
+   fuzzification(cubaLivre);
+   processaPaladar(cubaLivre);
+   return cubaLivre;
 }
 
 
@@ -364,69 +364,92 @@ void exibeDrink(Bebida *c){
 }
 
 
-Bebida* entradasDrink(Bebida *c){
-   float qtdeRefri=0;
-   float qtdeRun=0;
-   float qtdeGelo=0;
-   char refri;
-   char continuar;
+Bebida* prepararBebida(Bebida *cubaLivre){
+   float qtdeRefri=0, qtdeRun=0, qtdeGelo=0;
+   char tipoRefri;
     
    fflush(stdin);
     
    do{
-      printf("Digite o refrigerante (C = Coca, P = Pepsi): ");
-      scanf(" %c", &refri);
-   }while(refri != 'C' && refri != 'c' && refri != 'P' && refri != 'p');
+      printf("\nEscolha o refrigerante (C = Coca, P = Pepsi): ");
+      scanf(" %c", &tipoRefri);
+      if(tipoRefri != 'C' && tipoRefri != 'c' && tipoRefri != 'P' && tipoRefri != 'p'){
+        printf("\nPor favor digite apenas as opções válidas");
+        fflush(stdin);
+    }
+   }while(tipoRefri != 'C' && tipoRefri != 'c' && tipoRefri != 'P' && tipoRefri != 'p');
     
    fflush(stdin);
+   
+  if(tipoRefri == 'c' || tipoRefri == 'C'){
+    do{         
+        fflush(stdin);
+        printf("\nDigite a quantidade de Coca (de 50ml a 60ml): ");
+        scanf("%f", &qtdeRefri);
+        if (qtdeRefri < 50 || qtdeRefri > 60){
+          printf("\nPor favor digite um intervalo válido");
+          fflush(stdin);
+      }       
+    }while(qtdeRefri < 50 || qtdeRefri > 60);
+  }
     
-   if(refri == 'c' || refri == 'C'){
-      printf("\nDigite a quantidade de Coca (de 50ml a 60ml): ");
-      scanf("%f", &qtdeRefri);
+  fflush(stdin);
+    
+   if( tipoRefri == 'p' || tipoRefri == 'P'){
+      do{
+        printf("\nDigite a quantidade de Pepsi (de 60ml a 70ml): ");
+        scanf("%f", &qtdeRefri);        
+    if (qtdeRefri < 60 || qtdeRefri > 70){
+          printf("\nPor favor digite um intervalo válido");
+          fflush(stdin);
+      }       
+    }while(qtdeRefri < 60 || qtdeRefri > 70);
    }
+   
+    fflush(stdin);
+   
+    do{
+     printf("\nDigite a quantidade de Run (de 10ml a 30ml): ");
+     scanf("%f", &qtdeRun);
+    if (qtdeRun < 10 || qtdeRun > 30){
+          printf("\nPor favor digite um intervalo válido");
+          fflush(stdin);
+    }       
+   }while(qtdeRun < 10 || qtdeRun > 30);
     
-   if( refri == 'p' || refri == 'P'){
-      printf("\nDigite a quantidade de Pepsi (de 60ml a 70ml): ");
-      scanf("%f", &qtdeRefri);
-   }
+    fflush(stdin);
     
-   printf("\nDigite a quantidade de Run (de 10ml a 30ml): ");
-   scanf("%f", &qtdeRun);
-    
-   printf("\nDigite a quantidade de Gelo (20ml): ");
+   printf("\nDigite se a bebida terá gelo (20ml): ");
    scanf("%f", &qtdeGelo);
    
-   c = insereDrink(c, refri, qtdeRefri, qtdeRun, qtdeGelo);
-   return c;
+   cubaLivre = getDrink(cubaLivre, tipoRefri, qtdeRefri, qtdeRun, qtdeGelo);
+   return cubaLivre;
 }
 
 
 int main(){
   setlocale(LC_ALL, "Portuguese");
-    int opcao=0;
+    int op=0;
     Bebida* cuba = NULL;
     
     do{
        system("cls");
-       printf(" 1 - Preparar drink\n");
-       printf(" 2 - Exibir drink\n");
+       printf(" 1 - Preparar bebida\n");
+       printf(" 2 - Exibir bebida\n");
        printf(" 3 - Sair\n");
        printf("\nOpção\n");
-       scanf("%d", &opcao);
+       scanf("%d", &op);
        printf("\n\n");
         
-      switch(opcao){
-         case 1 :
-            cuba = entradasDrink(cuba);
-         break;
-         case 2 :
-            exibeDrink(cuba);
-         break; 
-         case 3 :
-            free(cuba);
-         break;
-      }
-   }while(opcao != 3);
+      if (op == 1) {
+        cuba = prepararBebida(cuba);
+	  }   
+	     
+      if (op == 2) {
+        exibeDrink(cuba);      	
+	  }	  
+	        
+   }while(op != 3);
    system("pause");
    return 0;
 }

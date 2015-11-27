@@ -17,7 +17,57 @@ typedef struct cuba{
 }Bebida;
 
 
+void layout(){	
+    system("cls");
+    printf("\n"); 
+    for(int i =0; i <79; i++)
+       printf("-");       
+    printf("\n");
+    printf("                       Bem vindo ao bar do Gallão         ");    
+    printf("\n");    
+    for(int i =0; i <79; i++)
+       printf("-");  
+    printf("\n\n"); 
+}
+        
+void layout_Final() {
+    printf("\n"); 
+    for(int i =0; i <79; i++)
+       printf("-");   
+    printf("\n");
+    printf("                       Obrigado por usar o Bar do Gallão          ");
+    printf("\n");
+    
+    for(int i =0; i <79; i++)
+       printf("-");
+  
+    printf("\n\n");     
+     
+}  
+     
+void layout1(){
+    printf("\n"); 
+    for(int i =0; i <79; i++)
+       printf("-");   
+    printf("\n");
+    printf("                               Cuba Livre          ");
+    printf("\n");    
+    for(int i =0; i <79; i++)
+       printf("-");  
+    printf("\n\n");     
+     
+} 
 
+int opcoesIniciais(){
+	int op = 0;
+	printf("\n Digite 1 para preparar o drink");
+	printf("\n Digite 2 para sair");
+	printf("\n Escolha a opção desejada\n");
+	scanf("%d", &op);
+	printf("\n\n");
+	fflush(stdin);
+	return op;
+}
 
 float calcularLineares(float x1, float x2, float x, int type) {
   if(type == 1){
@@ -436,23 +486,15 @@ int main(){
     Bebida* cuba = NULL;
     
     do{
-       system("cls");
-       printf("\n Digite 1 para preparar o drink");
-       printf("\n Digite 1 para exibir o drink");
-       printf("\n Digite 3 para sair");
-       printf("\n Escolha a opção desejada\n");
-       scanf("%d", &op);
-       printf("\n\n");
-        
+      layout();
+	  op = opcoesIniciais();
+	  
       if (op == 1) {
         cuba = prepararBebida(cuba);
-     }   
-        
-      if (op == 2) {
         exibeDrink(cuba);        
-     }     
+     }   
            
-   }while(op != 3);
+   }while(op != 2);
    system("pause");
    return 0;
 }

@@ -6,7 +6,7 @@
 
 typedef struct cuba{
    int paladar[3];
-   float fracoMax, suaveMax, forteMax;
+   float fraco, suave, forte;
    float pertinenciaGelo;
    float refriFraco, refriSuave, refriForte;
    float pertinenciaCuba;
@@ -253,7 +253,7 @@ float calcularGrauSuave(Bebida *c){ // processamento do ex 2a
    combinacaoMin3 = calcularMinimo(c->refriFraco, c->runForte, c->pertinenciaGelo);
     
    suave = calcularMaximo(combinacaoMin1, combinacaoMin2, combinacaoMin3); // calcula o maximo dos minimos
-   c->suaveMax = suave;
+   c->suave = suave;
    return suave;
 }
 
@@ -267,7 +267,7 @@ float calcularGrauForte(Bebida *c){ // processamento do EXERCÍCIO 2b
    combinacaoMin3 = calcularMinimo(c->refriSuave, c->runForte, c->pertinenciaGelo);
     
    forte = calcularMaximo(combinacaoMin1, combinacaoMin2, combinacaoMin3); // calcula o maximo dos minimos
-   c->forteMax = forte;
+   c->forte = forte;
    return forte;
 }
 
@@ -281,12 +281,12 @@ float calcularGrauFraco(Bebida *c){  // processamento do EXERCÍCIO 2c
    combinacaoMin3 = calcularMinimo(c->refriSuave, c->runFraco, c->pertinenciaGelo);
     
    fraco = calcularMaximo(combinacaoMin1, combinacaoMin2, combinacaoMin3); // calcula o maximo dos minimos
-   c->fracoMax = fraco;
+   c->fraco = fraco;
    return fraco;
 }
 
 
-void getPaladar(Bebida *c, float *ex2, float maiorPaladar){
+void getPaladar(Bebida *c, float *ex2, float maiorPaladar){// verifica os valores e em caso de empate decide pelo maior preço
     
    if(maiorPaladar > 0 && c->pertinenciaGelo == 1){
       if(maiorPaladar == ex2[0] && maiorPaladar == ex2[1] && maiorPaladar == ex2[2]){
@@ -408,9 +408,9 @@ void exibeDrink(Bebida *c){ // Exibe resultado do drink com seus respectivos pal
      
       printf("\n   Preço: R$ %.2f", c->preco);
       printf("\n\nResultados:");
-      printf("\n Grau suave = %.2f", c->suaveMax); // resultado do exercicio 2a
-      printf("\n Grau forte = %.2f", c->forteMax); // resultado do exercicio 2b
-      printf("\n Grau fraco = %.2f", c->fracoMax); // resultado do exercicio 2c
+      printf("\n Grau suave = %.2f", c->suave); // resultado do exercicio 2a
+      printf("\n Grau forte = %.2f", c->forte); // resultado do exercicio 2b
+      printf("\n Grau fraco = %.2f", c->fraco); // resultado do exercicio 2c
       printf("\n Paladar = %.2f\n\n", c->pertinenciaCuba); // resultado do exercicio 3
    }
    else

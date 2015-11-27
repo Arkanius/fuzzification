@@ -5,19 +5,19 @@
 
 
 typedef struct cuba{
-   char refri;
-   float qtdeGelo, qtdeRun, qtdeRefri;
-   float runForte, runSuave, runFraco;
-   float gpGelo;
-   float refriFraco, refriSuave, refriForte;
-   float fracoMax, suaveMax, forteMax;
-   float gpCuba;
-   float preco;
    int paladar[3];
+   float fracoMax, suaveMax, forteMax;
+   float pertinenciaGelo;
+   float refriFraco, refriSuave, refriForte;
+   float pertinenciaCuba;
+   float runForte, runSuave, runFraco;
+   float qtdGelo, qtdRun, qtdRefri;
+   float preco;
+   char refri;
 }Bebida;
 
 
-void layout(){	
+void layout(){ 
     system("cls");
     printf("\n"); 
     for(int i =0; i <79; i++)
@@ -31,7 +31,7 @@ void layout(){
 }
         
 void layoutFinal() {
-	system("cls");
+   system("cls");
     printf("\n"); 
     for(int i =0; i <79; i++)
        printf("-");   
@@ -47,7 +47,7 @@ void layoutFinal() {
 }  
      
 void layoutResultados(){
-	system("cls");
+   system("cls");
     printf("\n"); 
     for(int i =0; i <79; i++)
        printf("-");   
@@ -61,14 +61,14 @@ void layoutResultados(){
 } 
 
 int opcoesIniciais(){
-	int op = 0;
-	printf("\n Digite 1 para preparar o drink");
-	printf("\n Digite 2 para sair");
-	printf("\n Escolha a opção desejada\n");
-	scanf("%d", &op);
-	printf("\n\n");
-	fflush(stdin);
-	return op;
+   int op = 0;
+   printf("\n Digite 1 para preparar o drink");
+   printf("\n Digite 2 para sair");
+   printf("\n Escolha a opção desejada\n");
+   scanf("%d", &op);
+   printf("\n\n");
+   fflush(stdin);
+   return op;
 }
 
 float calcularLineares(float x1, float x2, float x, int type) {
@@ -85,39 +85,39 @@ void fuzzification(Bebida *c){ // Realiza o processo de fuzzificação
    
    if( c->refri == 'C' || c->refri == 'c' ){
       /************* Coca Forte ******************/
-        if( c->qtdeRefri < 50 || c->qtdeRefri > 54 ){
+        if( c->qtdRefri < 50 || c->qtdRefri > 54 ){
             c->refriForte = 0;    // Segundo o gráfico, se for menor que 50 ou maior que 54 não é forte
       }   
-        if( c->qtdeRefri >= 50 && c->qtdeRefri < 52 ) {
+        if( c->qtdRefri >= 50 && c->qtdRefri < 52 ) {
             c->refriForte = 1;    // Segundo o gráfico, se estiver entre 50 e 52 o grau de pertinencia a forte é igual a 1
       }
-        if( c->qtdeRefri >= 52 && c->qtdeRefri <= 54 ) {
-            c->refriForte = calcularLineares(52, 54, c->qtdeRefri, 2);  // Linear Decrescente, se x for maior ou igual a 52 e menor ou igual a 54 então (x2-x)/(x2-x1)
+        if( c->qtdRefri >= 52 && c->qtdRefri <= 54 ) {
+            c->refriForte = calcularLineares(52, 54, c->qtdRefri, 2);  // Linear Decrescente, se x for maior ou igual a 52 e menor ou igual a 54 então (x2-x)/(x2-x1)
       }
                              
       /************ Coca Suave *****************/
-      if( c->qtdeRefri < 52 || c->qtdeRefri > 58 ){
+      if( c->qtdRefri < 52 || c->qtdRefri > 58 ){
          c->refriSuave = 0;     // Se for maior que 52 ou maior que 58 não é suave
     }
-      if( c->qtdeRefri >= 52 && c->qtdeRefri < 54 ){
-          c->refriSuave = calcularLineares(52, 54, c->qtdeRefri, 1);
-      //c->refriSuave = ( c->qtdeRefri - 52 ) / (54 - 52);    // Linear Crescente, se for maior ou igual a 52 ou menor igual a 54 então (x-x1)/(x2-x1)
+      if( c->qtdRefri >= 52 && c->qtdRefri < 54 ){
+          c->refriSuave = calcularLineares(52, 54, c->qtdRefri, 1);
+      //c->refriSuave = ( c->qtdRefri - 52 ) / (54 - 52);    // Linear Crescente, se for maior ou igual a 52 ou menor igual a 54 então (x-x1)/(x2-x1)
     }      
-      if( c->qtdeRefri >= 54 && c->qtdeRefri <= 56 ){
+      if( c->qtdRefri >= 54 && c->qtdRefri <= 56 ){
             c->refriSuave = 1;    // se for maior ou igual 54 e menor igual 56 então pertinencia 1 para suave
     }
-      if( c->qtdeRefri > 56 && c->qtdeRefri <= 58 ) {
-            c->refriSuave = calcularLineares(56, 58, c->qtdeRefri, 2); // Linear Decrescente, se x for maior ou igual a 56 e menor ou igual a 58 então (x2-x)/(x2-x1)
+      if( c->qtdRefri > 56 && c->qtdRefri <= 58 ) {
+            c->refriSuave = calcularLineares(56, 58, c->qtdRefri, 2); // Linear Decrescente, se x for maior ou igual a 56 e menor ou igual a 58 então (x2-x)/(x2-x1)
     }    
       
      /************ Coca Fraca *****************/
-      if( c->qtdeRefri < 56 || c->qtdeRefri > 60 ){
+      if( c->qtdRefri < 56 || c->qtdRefri > 60 ){
          c->refriFraco = 0;   // Se for menor uqe 56  ou maior que 60 pertinencia 0 para fraco
     }
-      if( c->qtdeRefri >= 56 && c->qtdeRefri < 58 ){
-          c->refriFraco = calcularLineares(56, 58, c->qtdeRefri, 1);  // Linear Crescente, se x for maior ou igual 56 e menor ou igual 58 então (x-x1/(x2-x1)
+      if( c->qtdRefri >= 56 && c->qtdRefri < 58 ){
+          c->refriFraco = calcularLineares(56, 58, c->qtdRefri, 1);  // Linear Crescente, se x for maior ou igual 56 e menor ou igual 58 então (x-x1/(x2-x1)
      }
-      if( c->qtdeRefri >= 58 && c->qtdeRefri <= 60 ){
+      if( c->qtdRefri >= 58 && c->qtdRefri <= 60 ){
           c->refriFraco = 1;    // Se for maior ou igual 58 e menor ou igual 60 então pertinencia 1 para fraco
       }                        
    }
@@ -125,84 +125,84 @@ void fuzzification(Bebida *c){ // Realiza o processo de fuzzificação
     /************** Pepsi ***************/
    if(c->refri == 'p' || c->refri == 'P'){
       /************** Pepsi Forte ***************/
-      if( c->qtdeRefri < 60 || c->qtdeRefri > 64 ){
+      if( c->qtdRefri < 60 || c->qtdRefri > 64 ){
          c->refriForte = 0;   // se for menor que 60 ou maior que 64 grau de pertinencia forte é igual a 0
     }
-      if( c->qtdeRefri >= 60 && c->qtdeRefri < 62 ){
+      if( c->qtdRefri >= 60 && c->qtdRefri < 62 ){
           c->refriForte = 1;  // se for maior ou igual a 60 e menor ou igual 62 então grau de pertinencia forte é igual a 1
     }
-      if( c->qtdeRefri >= 62 && c->qtdeRefri <= 64 ){
-          c->refriForte = calcularLineares(62, 64, c->qtdeRefri, 2);    // Linear Descrescente, se for maior ou igual 62 e menor ou igual 64 então (x2-x)/(x2-x1)
+      if( c->qtdRefri >= 62 && c->qtdRefri <= 64 ){
+          c->refriForte = calcularLineares(62, 64, c->qtdRefri, 2);    // Linear Descrescente, se for maior ou igual 62 e menor ou igual 64 então (x2-x)/(x2-x1)
     }
       
       /************** Pepsi Suave ***************/
-      if( c->qtdeRefri < 62 || c->qtdeRefri > 68 ){
+      if( c->qtdRefri < 62 || c->qtdRefri > 68 ){
           c->refriSuave = 0;  // Se fir nebir qye 62 iy nauir qye 68 então grau de pertinencia suave é igual a 0
     }
-      if( c->qtdeRefri >= 62 && c->qtdeRefri < 64 ){
-          c->refriSuave = calcularLineares(62, 64, c->qtdeRefri, 1);     // Se for maior ou igual 62 e menor que 64 Linear crescente, então, (x-x1)/(x2-x1)
+      if( c->qtdRefri >= 62 && c->qtdRefri < 64 ){
+          c->refriSuave = calcularLineares(62, 64, c->qtdRefri, 1);     // Se for maior ou igual 62 e menor que 64 Linear crescente, então, (x-x1)/(x2-x1)
     }
-      if( c->qtdeRefri >= 64 && c->qtdeRefri < 66 ){
+      if( c->qtdRefri >= 64 && c->qtdRefri < 66 ){
           c->refriSuave = 1;  // Se for maior ou igual 64  e menor ou igual 66 então grau de pertinencia a suave é igual a 1
     }
-      if( c->qtdeRefri >= 66 && c->qtdeRefri <= 68 ){
-          c->refriSuave = calcularLineares(66, 68, c->qtdeRefri, 2);  // Linear Descrescente, se for maior ou igual 66 e menor ou igual 68 então, (x2-x)/(x2-x1)
+      if( c->qtdRefri >= 66 && c->qtdRefri <= 68 ){
+          c->refriSuave = calcularLineares(66, 68, c->qtdRefri, 2);  // Linear Descrescente, se for maior ou igual 66 e menor ou igual 68 então, (x2-x)/(x2-x1)
     }
         
       /************** Pepsi Fraca ***************/
-      if( c->qtdeRefri < 66 || c->qtdeRefri > 70 ){
+      if( c->qtdRefri < 66 || c->qtdRefri > 70 ){
           c->refriFraco = 0;  //Se for menor que 66 ou maior que 70 então grau de pertinencia a fraco é igual a 0
     }
-      if( c->qtdeRefri >= 66 && c->qtdeRefri < 68 ){
-          c->refriFraco = calcularLineares(66, 68, c->qtdeRefri, 1);    //Se for maior ou igual 66 e menor que 68, então Linear crescente, (x-x1)/(x2-x1)
+      if( c->qtdRefri >= 66 && c->qtdRefri < 68 ){
+          c->refriFraco = calcularLineares(66, 68, c->qtdRefri, 1);    //Se for maior ou igual 66 e menor que 68, então Linear crescente, (x-x1)/(x2-x1)
     }
-      if( c->qtdeRefri >= 68 && c->qtdeRefri <= 70 ){
+      if( c->qtdRefri >= 68 && c->qtdRefri <= 70 ){
           c->refriFraco = 1;    // se for maior ou igual que 68 e menor ou igual 70 então grau de pertinencia fraco igual a 1
     }
    }
    
    /************ Run **********/
    /************** Run Fraco ***************/
-   if( c->qtdeRun < 10 || c->qtdeRun > 20 ) {
+   if( c->qtdRun < 10 || c->qtdRun > 20 ) {
        c->runFraco = 0;   // Se for menor do que 10 ou maior do que 20 então pgrau de pertinencia igual a 0
    }
-   if( c->qtdeRun >= 10 && c->qtdeRun < 15 ) {
+   if( c->qtdRun >= 10 && c->qtdRun < 15 ) {
        c->runFraco = 1;   // Se for maior ou igual a 10 e menor do que 15 então, grau de pertinencia igual a 1
    }
-   if( c->qtdeRun >= 15 && c->qtdeRun <= 20 ) {
-     c->runFraco = calcularLineares(15, 20, c->qtdeRun, 2);    // Se for maior ou iugal a 15 e menor ou igual a 20 então linear decrescente, logo (x2-x)/(x2-x1)
+   if( c->qtdRun >= 15 && c->qtdRun <= 20 ) {
+     c->runFraco = calcularLineares(15, 20, c->qtdRun, 2);    // Se for maior ou iugal a 15 e menor ou igual a 20 então linear decrescente, logo (x2-x)/(x2-x1)
    }
    
    /************** Run Suave ***************/
-   if( c->qtdeRun < 15 || c->qtdeRun > 27 ) {
+   if( c->qtdRun < 15 || c->qtdRun > 27 ) {
        c->runSuave = 0;   // Se  for menor doque 15 ou maior do que 27 então grau de pertinencia é igual a 0
    }
-   if( c->qtdeRun >=15 && c->qtdeRun < 20 ) {  
-       c->runSuave = calcularLineares(15, 20, c->qtdeRun, 1); // se for maior ou igual a 15 então linear crescente, logo (x-x1)/(x2-x1)
+   if( c->qtdRun >=15 && c->qtdRun < 20 ) {  
+       c->runSuave = calcularLineares(15, 20, c->qtdRun, 1); // se for maior ou igual a 15 então linear crescente, logo (x-x1)/(x2-x1)
    }
-   if( c->qtdeRun >=20 && c->qtdeRun < 25 ) {
+   if( c->qtdRun >=20 && c->qtdRun < 25 ) {
        c->runSuave = 1;     // Se for maior ou igual a 20 e menor do que 25 então grau de pertinencia é igual a 1
    }
-   if( c->qtdeRun >= 25 && c->qtdeRun <= 27 ) {
-       c->runSuave = calcularLineares(25, 27, c->qtdeRun, 2);     // se for maior ou igual a 25 e menor ou igual a 27 então linear decrescente, logo (x2-x)/(x2-x1)
+   if( c->qtdRun >= 25 && c->qtdRun <= 27 ) {
+       c->runSuave = calcularLineares(25, 27, c->qtdRun, 2);     // se for maior ou igual a 25 e menor ou igual a 27 então linear decrescente, logo (x2-x)/(x2-x1)
    }
 
     /************** Run Forte ***************/
-   if( c->qtdeRun < 23 || c->qtdeRun > 30) {
+   if( c->qtdRun < 23 || c->qtdRun > 30) {
        c->runForte = 0;     // Se for menor do queu 23 ou maior do que 30 então grau de pertinencia igual a 0
    }
-   if( c->qtdeRun >= 23 && c->qtdeRun < 28 ) {
-       c->runForte = calcularLineares(23, 28, c->qtdeRun, 1); // Se for maior ou igual 23 e menor do que 28 então linear crescente, logo (x-x1)/(x2-x1)
+   if( c->qtdRun >= 23 && c->qtdRun < 28 ) {
+       c->runForte = calcularLineares(23, 28, c->qtdRun, 1); // Se for maior ou igual 23 e menor do que 28 então linear crescente, logo (x-x1)/(x2-x1)
    }
-   if( c->qtdeRun >= 28 && c->qtdeRun <= 30) {
+   if( c->qtdRun >= 28 && c->qtdRun <= 30) {
        c->runForte = 1;   //Se for maior ou igual a 28 e menor ou igual a 30 então grau de pertinencia 1
    }
 
    /************** Gelo ***************/
-   if( c->qtdeGelo < 20 || c->qtdeGelo > 20 )
-      c->gpGelo = 0;  //não possui gelo
+   if( c->qtdGelo < 20 || c->qtdGelo > 20 )
+      c->pertinenciaGelo = 0;  //não possui gelo
    else
-      c->gpGelo = 1;  // possui gelo
+      c->pertinenciaGelo = 1;  // possui gelo
 }
 
 // Encontra o menor valor passado
@@ -248,9 +248,9 @@ float calcularGrauSuave(Bebida *c){ // processamento do ex 2a
    float suave=0;
    float combinacaoMin1, combinacaoMin2, combinacaoMin3; // Representa as 3 combinações posiveis dadas no exercicio 2A
     
-   combinacaoMin1 = calcularMinimo(c->refriForte, c->runFraco, c->gpGelo);
-   combinacaoMin2 = calcularMinimo(c->refriSuave, c->runSuave, c->gpGelo);
-   combinacaoMin3 = calcularMinimo(c->refriFraco, c->runForte, c->gpGelo);
+   combinacaoMin1 = calcularMinimo(c->refriForte, c->runFraco, c->pertinenciaGelo);
+   combinacaoMin2 = calcularMinimo(c->refriSuave, c->runSuave, c->pertinenciaGelo);
+   combinacaoMin3 = calcularMinimo(c->refriFraco, c->runForte, c->pertinenciaGelo);
     
    suave = calcularMaximo(combinacaoMin1, combinacaoMin2, combinacaoMin3); // calcula o maximo dos minimos
    c->suaveMax = suave;
@@ -262,9 +262,9 @@ float calcularGrauForte(Bebida *c){ // processamento do EXERCÍCIO 2b
    float forte=0;
    float combinacaoMin1, combinacaoMin2, combinacaoMin3; // Representa as 3 combinações posiveis dadas no exercicio 2B
      
-   combinacaoMin1 = calcularMinimo(c->refriForte, c->runSuave, c->gpGelo);
-   combinacaoMin2 = calcularMinimo(c->refriForte, c->runForte, c->gpGelo);
-   combinacaoMin3 = calcularMinimo(c->refriSuave, c->runForte, c->gpGelo);
+   combinacaoMin1 = calcularMinimo(c->refriForte, c->runSuave, c->pertinenciaGelo);
+   combinacaoMin2 = calcularMinimo(c->refriForte, c->runForte, c->pertinenciaGelo);
+   combinacaoMin3 = calcularMinimo(c->refriSuave, c->runForte, c->pertinenciaGelo);
     
    forte = calcularMaximo(combinacaoMin1, combinacaoMin2, combinacaoMin3); // calcula o maximo dos minimos
    c->forteMax = forte;
@@ -276,9 +276,9 @@ float calcularGrauFraco(Bebida *c){  // processamento do EXERCÍCIO 2c
    float fraco=0;
    float combinacaoMin1, combinacaoMin2, combinacaoMin3;  // Representa as 3 combinações posiveis dadas no exercicio 2B
     
-   combinacaoMin1 = calcularMinimo(c->refriFraco, c->runFraco, c->gpGelo);
-   combinacaoMin2 = calcularMinimo(c->refriFraco, c->runSuave, c->gpGelo);
-   combinacaoMin3 = calcularMinimo(c->refriSuave, c->runFraco, c->gpGelo);
+   combinacaoMin1 = calcularMinimo(c->refriFraco, c->runFraco, c->pertinenciaGelo);
+   combinacaoMin2 = calcularMinimo(c->refriFraco, c->runSuave, c->pertinenciaGelo);
+   combinacaoMin3 = calcularMinimo(c->refriSuave, c->runFraco, c->pertinenciaGelo);
     
    fraco = calcularMaximo(combinacaoMin1, combinacaoMin2, combinacaoMin3); // calcula o maximo dos minimos
    c->fracoMax = fraco;
@@ -288,7 +288,7 @@ float calcularGrauFraco(Bebida *c){  // processamento do EXERCÍCIO 2c
 
 void getPaladar(Bebida *c, float *ex2, float maiorPaladar){
     
-   if(maiorPaladar > 0 && c->gpGelo == 1){
+   if(maiorPaladar > 0 && c->pertinenciaGelo == 1){
       if(maiorPaladar == ex2[0] && maiorPaladar == ex2[1] && maiorPaladar == ex2[2]){
          c->paladar[0]=1; //forte
          c->paladar[1]=1; //suave
@@ -352,7 +352,7 @@ Bebida *processaPaladar(Bebida* c){ // processamento do exercicio 2 e 3
    exer2[2] = maximoFraco;
     
    paladar = calcularMaximo(maximoForte, maximoSuave, maximoFraco);
-   c->gpCuba = paladar; // paladar: exercicio 3
+   c->pertinenciaCuba = paladar; // paladar: exercicio 3
     
    getPaladar(c, exer2, paladar);
     
@@ -365,9 +365,9 @@ Bebida* getDrink(Bebida *cubaLivre, char tipoRefri, float refri, float run, floa
    cubaLivre = (Bebida*)malloc(sizeof(Bebida));
 
    cubaLivre->refri = tipoRefri;
-   cubaLivre->qtdeRefri = refri;
-   cubaLivre->qtdeRun = run;
-   cubaLivre->qtdeGelo = gelo;
+   cubaLivre->qtdRefri = refri;
+   cubaLivre->qtdRun = run;
+   cubaLivre->qtdGelo = gelo;
             
    fuzzification(cubaLivre);
    processaPaladar(cubaLivre);
@@ -411,7 +411,7 @@ void exibeDrink(Bebida *c){ // Exibe resultado do drink com seus respectivos pal
       printf("\n Grau suave = %.2f", c->suaveMax); // resultado do exercicio 2a
       printf("\n Grau forte = %.2f", c->forteMax); // resultado do exercicio 2b
       printf("\n Grau fraco = %.2f", c->fracoMax); // resultado do exercicio 2c
-      printf("\n Paladar = %.2f\n\n", c->gpCuba); // resultado do exercicio 3
+      printf("\n Paladar = %.2f\n\n", c->pertinenciaCuba); // resultado do exercicio 3
    }
    else
       printf("Fatal Error\n");
@@ -489,9 +489,9 @@ int main(){
     
     do{
       
-	  layout();
-	  op = opcoesIniciais();
-	  
+     layout();
+     op = opcoesIniciais();
+     
       if (op == 1) {
         cuba = prepararBebida(cuba);
         layoutResultados();

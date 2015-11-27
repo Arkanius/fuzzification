@@ -6,11 +6,11 @@
 
 typedef struct cuba{
    char refri;
-   float qtdeRefri, qtdeRun, qtdeGelo;
-   float refriForte, refriSuave, refriFraco;
+   float qtdeGelo, qtdeRun, qtdeRefri;
    float runForte, runSuave, runFraco;
    float gpGelo;
-   float suaveMax, forteMax, fracoMax;
+   float refriFraco, refriSuave, refriForte;
+   float fracoMax, suaveMax, forteMax;
    float gpCuba;
    float preco;
    int paladar[3];
@@ -192,45 +192,45 @@ float calcularMaximo(float combinacaoValor1, float combinacaoValor2, float combi
 }
 
 
-float suaveMax(Bebida *c){ // processamento do EXERCÍCIO 2a
-   float suaveMax=0;
+float calcularGrauSuave(Bebida *c){ // processamento do ex 2a
+   float suave=0;
    float combinacaoMin1, combinacaoMin2, combinacaoMin3; // Representa as 3 combinações posiveis dadas no exercicio 2A
     
    combinacaoMin1 = calcularMinimo(c->refriForte, c->runFraco, c->gpGelo);
    combinacaoMin2 = calcularMinimo(c->refriSuave, c->runSuave, c->gpGelo);
    combinacaoMin3 = calcularMinimo(c->refriFraco, c->runForte, c->gpGelo);
     
-   suaveMax = calcularMaximo(combinacaoMin1, combinacaoMin2, combinacaoMin3); // calcula o maximo dos minimos
-   c->suaveMax = suaveMax;
-   return suaveMax;
+   suave = calcularMaximo(combinacaoMin1, combinacaoMin2, combinacaoMin3); // calcula o maximo dos minimos
+   c->suaveMax = suave;
+   return suave;
 }
 
 
-float forteMax(Bebida *c){ // processamento do EXERCÍCIO 2b
-   float forteMax=0;
+float calcularGrauForte(Bebida *c){ // processamento do EXERCÍCIO 2b
+   float forte=0;
    float combinacaoMin1, combinacaoMin2, combinacaoMin3; // Representa as 3 combinações posiveis dadas no exercicio 2B
      
    combinacaoMin1 = calcularMinimo(c->refriForte, c->runSuave, c->gpGelo);
    combinacaoMin2 = calcularMinimo(c->refriForte, c->runForte, c->gpGelo);
    combinacaoMin3 = calcularMinimo(c->refriSuave, c->runForte, c->gpGelo);
     
-   forteMax = calcularMaximo(combinacaoMin1, combinacaoMin2, combinacaoMin3); // calcula o maximo dos minimos
-   c->forteMax = forteMax;
-   return forteMax;
+   forte = calcularMaximo(combinacaoMin1, combinacaoMin2, combinacaoMin3); // calcula o maximo dos minimos
+   c->forteMax = forte;
+   return forte;
 }
 
 
-float fracoMax(Bebida *c){  // processamento do EXERCÍCIO 2c
-   float fracoMax=0;
+float calcularGrauFraco(Bebida *c){  // processamento do EXERCÍCIO 2c
+   float fraco=0;
    float combinacaoMin1, combinacaoMin2, combinacaoMin3;  // Representa as 3 combinações posiveis dadas no exercicio 2B
     
    combinacaoMin1 = calcularMinimo(c->refriFraco, c->runFraco, c->gpGelo);
    combinacaoMin2 = calcularMinimo(c->refriFraco, c->runSuave, c->gpGelo);
    combinacaoMin3 = calcularMinimo(c->refriSuave, c->runFraco, c->gpGelo);
     
-   fracoMax = calcularMaximo(combinacaoMin1, combinacaoMin2, combinacaoMin3); // calcula o maximo dos minimos
-   c->fracoMax = fracoMax;
-   return fracoMax;
+   fraco = calcularMaximo(combinacaoMin1, combinacaoMin2, combinacaoMin3); // calcula o maximo dos minimos
+   c->fracoMax = fraco;
+   return fraco;
 }
 
 
@@ -285,22 +285,22 @@ void getPaladar(Bebida *c, float *ex2, float maiorPaladar){
 }
 
 
-Bebida *processaPaladar(Bebida* c){ // Exercicio 3
+Bebida *processaPaladar(Bebida* c){ // processamento do exercicio 2 e 3
    float maximoForte, maximoFraco, maximoSuave;
    float exer2[3];
    float paladar = 0;
    int i=0;
     
-   maximoForte = forteMax(c); //EXERCÍCIO 2b
-   maximoSuave = suaveMax(c); //EXERCÍCIO 2a
-   maximoFraco = fracoMax(c); //EXERCÍCIO 2c
+   maximoForte = calcularGrauForte(c); 
+   maximoSuave = calcularGrauSuave(c); 
+   maximoFraco = calcularGrauFraco(c); 
    
    exer2[0] = maximoForte;
    exer2[1] = maximoSuave;
    exer2[2] = maximoFraco;
     
    paladar = calcularMaximo(maximoForte, maximoSuave, maximoFraco);
-   c->gpCuba = paladar; //EXERCÍCIO 3
+   c->gpCuba = paladar; // paladar: exercicio 3
     
    getPaladar(c, exer2, paladar);
     
@@ -308,7 +308,7 @@ Bebida *processaPaladar(Bebida* c){ // Exercicio 3
 }
 
 
-Bebida* getDrink(Bebida *cubaLivre, char tipoRefri, float refri, float run, float gelo){
+Bebida* getDrink(Bebida *cubaLivre, char tipoRefri, float refri, float run, float gelo){// seta no struct as quantidades inseridas
    free(cubaLivre);
    cubaLivre = (Bebida*)malloc(sizeof(Bebida));
 
@@ -323,43 +323,46 @@ Bebida* getDrink(Bebida *cubaLivre, char tipoRefri, float refri, float run, floa
 }
 
 
-void exibeDrink(Bebida *c){
+void exibeDrink(Bebida *c){ // Exibe resultado do drink com seus respectivos paladares
    int *p = c->paladar;
 
-   printf("Paladar: ");
+   printf("\nPaladar: ");
 
    if(c != NULL){
-      if( p[0] == 1 && p[1] == 1 && p[2] == 1 )
-         printf("Forte, Suave e Fraco\n");
-      else
-         if( p[0] == 1 && p[1] == 1 )
-            printf("Forte e Suave\n");
-         else
-            if( p[0] == 1 && p[2] == 1 )
-               printf("Forte e Fraco\n");
-            else
-               if( p[1] == 1 && p[2] ==1 )
-                  printf("Suave e Fraco\n");
-               else
-                  if( p[0] == 1 )
-                     printf("Forte\n");
-                  else
-                     if( p[1] == 1 )
-                        printf("Suave\n");
-                     else
-                        if( p[2] == 1)
-                           printf("Fraco\n");
-                        else
-                           printf("Não é Cuba Livre\n");
-      printf("Preço: R$ %.2f\n\n", c->preco);
-      printf("\nResultados:\n");
-      printf("2a Suave(máx) = %.2f\n", c->suaveMax);
-      printf("2b Forte(máx) = %.2f\n", c->forteMax);
-      printf("2c Fraco(máx) = %.2f\n", c->fracoMax);
-      printf("3 Paladar(máx) = %.2f\n", c->gpCuba);
+      if(p[0] == 1 && p[1] == 1 && p[2] == 1 ) {
+         printf("\nForte, Suave e Fraco");
+     }
+      if(p[0] == 1 && p[1] == 1 && p[2]!= 1) {
+        printf("\nForte e Suave");
+     }
+      if(p[0] == 1 && p[1]!=1 && p[2] == 1 ) {
+        printf("\nForte e Fraco");
+     }
+      if(p[1] == 1 && p[2] ==1 && p[0]!= 1) {
+        printf("\nSuave e Fraco");
+     }
+      if(p[0] == 1 && p[1] != 1 && p[2] != 1) {
+        printf("\nForte");
+     }
+      if(p[1] == 1 && p[0] != 1 && p[2] != 1) {
+        printf("\nSuave");
+     }
+      if(p[2] == 1 && p[0] != 1 && p[1] != 1) {
+        printf("\nFraco");
+     }
+     if(p[0] != 1 && p[1] != 1 && p[2] != 1){
+        printf("\nNão é Cuba Livre");
+     }
+     
+      printf("\nPreço: R$ %.2f", c->preco);
+      printf("\n\nResultados:");
+      printf("\n Grau suave = %.2f", c->suaveMax); // resultado do exercicio 2a
+      printf("\n Grau forte = %.2f", c->forteMax); // resultado do exercicio 2b
+      printf("\n Grau fraco = %.2f", c->fracoMax); // resultado do exercicio 2c
+      printf("\n Paladar = %.2f\n\n", c->gpCuba); // resultado do exercicio 3
    }
    else
-      printf("Sem drink!\n");
+      printf("Fatal Error\n");
    system("pause");
 }
 
@@ -434,21 +437,21 @@ int main(){
     
     do{
        system("cls");
-       printf(" 1 - Preparar bebida\n");
-       printf(" 2 - Exibir bebida\n");
-       printf(" 3 - Sair\n");
-       printf("\nOpção\n");
+       printf("\n Digite 1 para preparar o drink");
+       printf("\n Digite 1 para exibir o drink");
+       printf("\n Digite 3 para sair");
+       printf("\n Escolha a opção desejada\n");
        scanf("%d", &op);
        printf("\n\n");
         
       if (op == 1) {
         cuba = prepararBebida(cuba);
-	  }   
-	     
+     }   
+        
       if (op == 2) {
-        exibeDrink(cuba);      	
-	  }	  
-	        
+        exibeDrink(cuba);        
+     }     
+           
    }while(op != 3);
    system("pause");
    return 0;

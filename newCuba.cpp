@@ -30,7 +30,8 @@ void layout(){
     printf("\n\n"); 
 }
         
-void layout_Final() {
+void layoutFinal() {
+	system("cls");
     printf("\n"); 
     for(int i =0; i <79; i++)
        printf("-");   
@@ -45,12 +46,13 @@ void layout_Final() {
      
 }  
      
-void layout1(){
+void layoutResultados(){
+	system("cls");
     printf("\n"); 
     for(int i =0; i <79; i++)
        printf("-");   
     printf("\n");
-    printf("                               Cuba Livre          ");
+    printf("                               Resultados          ");
     printf("\n");    
     for(int i =0; i <79; i++)
        printf("-");  
@@ -380,31 +382,31 @@ void exibeDrink(Bebida *c){ // Exibe resultado do drink com seus respectivos pal
 
    if(c != NULL){
       if(p[0] == 1 && p[1] == 1 && p[2] == 1 ) {
-         printf("\nForte, Suave e Fraco");
+         printf("\n  Forte, Suave e Fraco");
      }
       if(p[0] == 1 && p[1] == 1 && p[2]!= 1) {
-        printf("\nForte e Suave");
+        printf("\n   Forte e Suave");
      }
       if(p[0] == 1 && p[1]!=1 && p[2] == 1 ) {
-        printf("\nForte e Fraco");
+        printf("\n   Forte e Fraco");
      }
       if(p[1] == 1 && p[2] ==1 && p[0]!= 1) {
-        printf("\nSuave e Fraco");
+        printf("\n   Suave e Fraco");
      }
       if(p[0] == 1 && p[1] != 1 && p[2] != 1) {
-        printf("\nForte");
+        printf("\n   Forte");
      }
       if(p[1] == 1 && p[0] != 1 && p[2] != 1) {
-        printf("\nSuave");
+        printf("\n   Suave");
      }
       if(p[2] == 1 && p[0] != 1 && p[1] != 1) {
-        printf("\nFraco");
+        printf("\n   Fraco");
      }
      if(p[0] != 1 && p[1] != 1 && p[2] != 1){
-        printf("\nNão é Cuba Livre");
+        printf("\n   Não é Cuba Livre");
      }
      
-      printf("\nPreço: R$ %.2f", c->preco);
+      printf("\n   Preço: R$ %.2f", c->preco);
       printf("\n\nResultados:");
       printf("\n Grau suave = %.2f", c->suaveMax); // resultado do exercicio 2a
       printf("\n Grau forte = %.2f", c->forteMax); // resultado do exercicio 2b
@@ -486,16 +488,19 @@ int main(){
     Bebida* cuba = NULL;
     
     do{
-      layout();
+      
+	  layout();
 	  op = opcoesIniciais();
 	  
       if (op == 1) {
         cuba = prepararBebida(cuba);
+        layoutResultados();
         exibeDrink(cuba);        
      }   
            
    }while(op != 2);
    system("pause");
+   layoutFinal();
    return 0;
 }
 
